@@ -9,4 +9,4 @@ const Home = function () {
     )
 }
 
-export default Home
+export default Home;
