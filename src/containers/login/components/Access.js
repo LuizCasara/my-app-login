@@ -79,7 +79,7 @@ const Access = function () {
 
     const blur = {
         email: (value) => validMail(value),
-        password: (value) => onChange('password', md5(value.target.value)),
+        password: (value) => validPassword(value),
     }
 
     function onChange(field, value) {
@@ -94,17 +94,26 @@ const Access = function () {
     function validMail(value) {
         const regex = /\S+@\S+\.\S+/;
         const validEmail = regex.test(String(value.target.value).toLowerCase());
-        if (!validEmail) {
+        if (!validEmail || value == null || value.target.value.length <= 0) {
             setEmailError(getMessage("error.email"));
         }
     }
 
+    function validPassword(value) {
+        if (value == null || value.target.value.length <= 0) {
+            return;
+        }
+        onChange('password', md5(value.target.value))
+    }
+
     async function onClick() {
-        const response = await LoginRepository.signIn(access);
-        if (response.token != null) {
-            history.push("/home");
-            localStorage.setItem('userToken', response.token);
-            setAccess({ email: "", password: "" });
+        if (emailError == null && access.password != "" && access.email != "") {
+            const response = await LoginRepository.signIn(access);
+            if (response.token != null) {
+                history.push("/home");
+                localStorage.setItem('userToken', response.token);
+                setAccess({ email: "", password: "" });
+            }
         }
     }
 
