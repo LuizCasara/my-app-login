@@ -69,6 +69,7 @@ const H4 = styled(Text)`
 
 const Access = function () {
     const [access, setAccess] = useState({ email: "", password: "" });
+    const [emailError, setEmailError] = useState(null);
     const history = useHistory();
 
     const change = {
@@ -85,13 +86,16 @@ const Access = function () {
         const newAccess = { ...access };
         newAccess[field] = value;
         setAccess(newAccess);
+        if (field == "email" && emailError != null) {
+            setEmailError(null);
+        }
     }
 
     function validMail(value) {
         const regex = /\S+@\S+\.\S+/;
         const validEmail = regex.test(String(value.target.value).toLowerCase());
         if (!validEmail) {
-            alert(getMessage("error.email"));
+            setEmailError(getMessage("error.email"));
         }
     }
 
@@ -113,6 +117,7 @@ const Access = function () {
                     label={getMessage('email')}
                     placeholder={getMessage('email.placeholder')}
                     value={access.email}
+                    error={emailError}
                     onChange={change.email}
                     onBlur={blur.email}
                 />

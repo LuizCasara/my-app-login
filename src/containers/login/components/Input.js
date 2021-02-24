@@ -19,6 +19,8 @@ const StyledInput = styled.input`
     @media(max-width: 769px) {
         font-size: 12px;
     }
+
+    border-color: ${props => props.error ? "red" : "#989FDB"} ;
 `
 const Label = styled.a`
     font-size: 10px;
@@ -34,16 +36,40 @@ const Label = styled.a`
         margin: 0px 0 0px 5px;
     }
 `
+const LabelError = styled.a`
+    font-size: 10px;
+    line-height: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: left;
+    margin: 0px 0 -10px 5px;
+    color: red !important;
+
+    @media(max-width: 769px) {
+        line-height: 24px;
+        margin: 0px 0 0px 5px;
+    }
+`
 
 const Input = function (props) {
     const {
-        label, placeholder, value, onChange, onBlur, type = "",
+        label, placeholder, value, onChange, onBlur, type = "", error,
     } = props;
 
     return (
         <Flex>
             <Label>{label}</Label>
-            <StyledInput value={value} placeholder={placeholder} onChange={onChange} onBlur={onBlur} type={type} />
+            <StyledInput
+                value={value}
+                placeholder={placeholder}
+                onChange={onChange}
+                onBlur={onBlur}
+                type={type}
+                error={error != null && type != "password"}
+            />
+            {error != null && type != "password" &&
+                <LabelError>{error}</LabelError>
+            }
         </Flex>
     )
 }
