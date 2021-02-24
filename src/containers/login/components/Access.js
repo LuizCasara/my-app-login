@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import md5 from 'md5';
 
 import Input from './Input';
@@ -69,14 +69,16 @@ const H4 = styled(Text)`
 
 const Access = function () {
     const [access, setAccess] = useState({ email: "", password: "" });
+    const history = useHistory();
 
     const change = {
         email: (value) => onChange('email', value.target.value),
-        password: (value) => onChange('password', md5(value.target.value)),
+        password: (value) => onChange('password', value.target.value),
     }
 
     const blur = {
         email: (value) => validMail(value),
+        password: (value) => onChange('password', md5(value.target.value)),
     }
 
     function onChange(field, value) {
@@ -93,9 +95,13 @@ const Access = function () {
         }
     }
 
-    function onClick() {
-        const token = LoginRepository.signIn(access);
-        localStorage.setItem('userToken', token);
+    async function onClick() {
+        const response = await LoginRepository.signIn(access);
+        if (response.token != null) {
+            history.push("/home");
+            localStorage.setItem('userToken', response.token);
+            setAccess({ email: "", password: "" });
+        }
     }
 
     return (
@@ -115,6 +121,7 @@ const Access = function () {
                     placeholder="********"
                     value={access.password}
                     onChange={change.password}
+                    onBlur={blur.password}
                     type="password"
                 />
                 <Button text={getMessage('enter')} onClick={onClick} />
