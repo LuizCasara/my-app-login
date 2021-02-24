@@ -1,11 +1,11 @@
 # Sobre o Projeto
-Tela de login responsiva, com textos estrutura de textos pronta para internacionalização em mais idiomas alem do português(pt-BR), com rotas para:
+Tela de login responsiva, com estrutura de textos pronta para internacionalização em mais idiomas alem do português(pt-BR). Com as rotas:
 * /login
 * /home
 * /forgetPassword
 * /pageNotFound
 
-Aplicação esta publicada no [Heroku](https://app-login-wiser.herokuapp.com/);
+Aplicação esta publicada no Heroku [Acesso](https://app-login-wiser.herokuapp.com/);
 
 Sendo que o login, chama esta chamando a api no [Mockapi.io](https://6035d51e6496b9001749f6b6.mockapi.io/api/v1/signIn);
 
