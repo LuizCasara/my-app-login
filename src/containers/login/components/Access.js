@@ -110,9 +110,9 @@ const Access = function () {
         if (emailError == null && access.password != "" && access.email != "") {
             const response = await LoginRepository.signIn(access);
             if (response.token != null) {
-                history.push("/home");
                 localStorage.setItem('userToken', response.token);
                 setAccess({ email: "", password: "" });
+                history.push("/home");
             }
         }
     }

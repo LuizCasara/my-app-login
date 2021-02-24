@@ -5,7 +5,8 @@ import Home from "./containers/home";
 import PageNotFound from "./containers/pageNotFound";
 import ForgotPassword from "./containers/forgotPassword";
 
-const PrivateRoute = ({ token, ...props }) => {
+const PrivateRoute = ({ ...props }) => {
+    const token = localStorage.getItem('userToken') || null;
     if (token == null) {
         return (<Route component={PageNotFound} />)
     }
@@ -15,20 +16,13 @@ const PrivateRoute = ({ token, ...props }) => {
 };
 
 const Routes = function () {
-    const [token, setToken] = useState(null);
-
-    useEffect(() => {
-        const token = localStorage.getItem('userToken') || null;
-        setToken(token);
-    }, []);
-
     return (
         <BrowserRouter>
             <Switch>
                 <Route path="/" component={Login} exact />
                 <Route path="/login" component={Login} exact />
                 <Route path="/forgotPassword" component={ForgotPassword} exact />
-                <PrivateRoute path="/home" component={Home} token={token} exact />
+                <PrivateRoute path="/home" component={Home} exact />
                 <Route path="/*" component={PageNotFound} exact />
             </Switch>
         </BrowserRouter>
