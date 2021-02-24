@@ -1,0 +1,11 @@
+{
+    "email": "e-mail",
+    "email.placeholder": "user@email.com",
+    "password": "senha",
+    "access.title": "Olá, seja bem-vindo!",
+    "access.message": "Para acessar a plataforma, faça seu login.",
+    "access.forgotPassword": "Esqueceu seu login ou senha? Clique ",
+    "access.forgotPassword.clickHere": "aqui ",
+    "error.email": "Digite um e-mail válido;",
+    "enter": "entrar"
+}
