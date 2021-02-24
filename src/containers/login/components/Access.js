@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import getMessage from '../../../utils/getMessage';
+import { Link } from 'react-router-dom';
+import md5 from 'md5';
+
 import Input from './Input';
 import Button from './Button';
-import { Link } from 'react-router-dom';
+import getMessage from '../../../utils/getMessage';
+import LoginRepository from '../../../repositories/login';
 
 const Container = styled.div`
     position: relative;
@@ -68,8 +71,8 @@ const Access = function () {
     const [access, setAccess] = useState({ email: "", password: "" });
 
     const change = {
-        email: (value) => onChange('email', value),
-        password: (value) => onChange('password', value),
+        email: (value) => onChange('email', value.target.value),
+        password: (value) => onChange('password', md5(value.target.value)),
     }
 
     const blur = {
@@ -78,7 +81,7 @@ const Access = function () {
 
     function onChange(field, value) {
         const newAccess = { ...access };
-        newAccess[field] = value.target.value;
+        newAccess[field] = value;
         setAccess(newAccess);
     }
 
@@ -91,7 +94,8 @@ const Access = function () {
     }
 
     function onClick() {
-        alert('oi')
+        const token = LoginRepository.signIn(access);
+        localStorage.setItem('userToken', token);
     }
 
     return (
